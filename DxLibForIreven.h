@@ -3,44 +3,44 @@
 #include<math.h>
 
 /// <summary>
-/// dxlibÝ’è
+/// dxlibï¿½Ý’ï¿½
 /// </summary>
-/// <param name="screenWidht">ƒXƒNƒŠ[ƒ“‚Ì•</param>
-/// <param name="screenHeight">ƒXƒNƒŠ[ƒ“‚Ì‚‚³</param>
+/// <param name="screenWidht">ï¿½Xï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ì•ï¿½</param>
+/// <param name="screenHeight">ï¿½Xï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½</param>
 void DxlibSetting(unsigned int screenWidht = 1920, unsigned int screenHeight = 1080)
 {
-    SetGraphMode(screenWidht, screenHeight, 32);//ƒEƒBƒ“ƒhƒE‚ÌƒTƒCƒY‚ÆƒJƒ‰[ƒ‚[ƒh‚ðŒˆ‚ß‚é
-    ChangeWindowMode(TRUE);						//ƒEƒBƒ“ƒhƒEƒ‚[ƒh‚É‚·‚é
-    SetWindowStyleMode(7);						//Å‘å‰»ƒ{ƒ^ƒ“‚ª‘¶Ý‚·‚éƒEƒCƒ“ƒhƒEƒ‚[ƒh‚É•ÏX
+    SetGraphMode(screenWidht, screenHeight, 32);//ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½ÌƒTï¿½Cï¿½Yï¿½ÆƒJï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½
+    ChangeWindowMode(TRUE);						//ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½ï¿½ï¿½[ï¿½hï¿½É‚ï¿½ï¿½ï¿½
+    SetWindowStyleMode(7);						//ï¿½Å‘å‰»ï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý‚ï¿½ï¿½ï¿½Eï¿½Cï¿½ï¿½ï¿½hï¿½Eï¿½ï¿½ï¿½[ï¿½hï¿½É•ÏX
 
     if (DxLib_Init() == -1)return;
 
-    // ƒTƒCƒY•ÏX‚ð‰Â”\‚É‚·‚é
+    // ï¿½Tï¿½Cï¿½Yï¿½ÏXï¿½ï¿½ï¿½Â”\ï¿½É‚ï¿½ï¿½ï¿½
     SetWindowSizeChangeEnableFlag(TRUE, FALSE);
 
-    // ƒEƒCƒ“ƒhƒEƒTƒCƒY‚ÍƒQ[ƒ€‰æ–Ê‚Æˆê’v‚³‚¹‚é
+    // ï¿½Eï¿½Cï¿½ï¿½ï¿½hï¿½Eï¿½Tï¿½Cï¿½Yï¿½ÍƒQï¿½[ï¿½ï¿½ï¿½ï¿½Ê‚Æˆï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     SetWindowSize(screenWidht, screenHeight);
 
-    SetMainWindowText("gamename");              //ƒEƒBƒ“ƒhƒEi”’‚¢‚Æ‚±‚ëj‚ÉƒQ[ƒ€–¼‚ð‘‚­
-    SetDrawScreen(DX_SCREEN_BACK);		        //”wŒi‚ðƒZƒbƒg‚·‚é
+    SetMainWindowText("gamename");              //ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½iï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½ï¿½jï¿½ÉƒQï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    SetDrawScreen(DX_SCREEN_BACK);		        //ï¿½wï¿½iï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½ï¿½
 }
 
 /// <summary>
-/// ”wŒi“§‰ß“®‰æÄ¶ŠÖ”
+/// ï¿½wï¿½iï¿½ï¿½ï¿½ß“ï¿½ï¿½ï¿½Äï¿½ï¿½Öï¿½
 /// </summary>
-/// <param name="movieHandle">“®‰æƒnƒ“ƒhƒ‹</param>
-/// <param name="screenHandle">ƒXƒNƒŠ[ƒ“ƒnƒ“ƒhƒ‹¦MakeScreenŠÖ”‚Åƒnƒ“ƒhƒ‹‚ðì‚Á‚Ä‚»‚ÌŽž‚É‘æŽOˆø”‚ðTRUE‚É‚·‚é•K—v‚ª‚ ‚é</param>
-/// <param name="movieBackColorType">“®‰æ”wŒiF‚Ìƒ^ƒCƒv(0:•, 1:—Î, 2:”’‚ðŽw’è‚·‚é)</param>
-/// <param name="movieWidht">“®‰æ•</param>
-/// <param name="movieHeght">“®‰æ‚‚³</param>
-/// <param name="isLoop">“®‰æ‚ðƒ‹[ƒv‚·‚é‚©</param>
-/// <param name="screenType">ÅI“I‚É•`‰æ‚·‚é‚Æ‚±‚ÌƒXƒNƒŠ[ƒ“ƒnƒ“ƒhƒ‹</param>
+/// <param name="movieHandle">ï¿½ï¿½ï¿½ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½</param>
+/// <param name="screenHandle">ï¿½Xï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½MakeScreenï¿½Öï¿½ï¿½Åƒnï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ÌŽï¿½ï¿½É‘ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½TRUEï¿½É‚ï¿½ï¿½ï¿½Kï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</param>
+/// <param name="movieBackColorType">ï¿½ï¿½ï¿½ï¿½wï¿½iï¿½Fï¿½Ìƒ^ï¿½Cï¿½v(0:ï¿½ï¿½, 1:ï¿½ï¿½, 2:ï¿½ï¿½ï¿½ï¿½ï¿½wï¿½è‚·ï¿½ï¿½)</param>
+/// <param name="movieWidht">ï¿½ï¿½ï¿½æ•</param>
+/// <param name="movieHeght">ï¿½ï¿½ï¿½æ‚ï¿½ï¿½</param>
+/// <param name="isLoop">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½vï¿½ï¿½ï¿½é‚©</param>
+/// <param name="screenType">ï¿½ÅIï¿½Iï¿½É•`ï¿½æ‚·ï¿½ï¿½Æ‚ï¿½ï¿½ÌƒXï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½</param>
 void PlayTransparentMovie(int movieHandle, int screenHandle, unsigned short movieBackColorType = 0, int movieWidht = 1920, int movieHeight = 1080,
     VECTOR position = VGet(0.0f, 0.0f, 0.0f), bool isLoop = true, int screenType = DX_SCREEN_BACK)
 {
-    //ƒXƒNƒŠ[ƒ“ƒnƒ“ƒhƒ‹‚É“®‰æ‚ð•`‰æ‚·‚é
+    //ï¿½Xï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½É“ï¿½ï¿½ï¿½ï¿½`ï¿½æ‚·ï¿½ï¿½
     SetDrawScreen(screenHandle);
-    if (isLoop)//ƒ‹[ƒvÄ¶‚·‚é‚©‚Ç‚¤‚©
+    if (isLoop)//ï¿½ï¿½ï¿½[ï¿½vï¿½Äï¿½ï¿½ï¿½ï¿½é‚©ï¿½Ç‚ï¿½ï¿½ï¿½
     {
         PlayMovieToGraph(movieHandle, DX_PLAYTYPE_LOOP);
     }
@@ -50,35 +50,35 @@ void PlayTransparentMovie(int movieHandle, int screenHandle, unsigned short movi
     }
     DrawExtendGraph(position.x, position.y, position.x + movieWidht, position.y + movieHeight, movieHandle, TRUE);
 
-    //Œ³‚ÌƒXƒNƒŠ[ƒ“ƒnƒ“ƒhƒ‹‚É–ß‚·
+    //ï¿½ï¿½ï¿½ÌƒXï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½É–ß‚ï¿½
     SetDrawScreen(screenType);
 
-    //ƒXƒNƒŠ[ƒ“ƒnƒ“ƒhƒ‹‚ð‰æ‘œ‚Æ‚µ‚Ä“§‰ß‚µ‚Ä‚©‚ç•`‰æ
-    //”wŒi‚ÌF‚É‚æ‚Á‚Ä“§‰ß‚·‚éF‚ð•Ï‚¦‚é
-    if (movieBackColorType == 0)
-    {
-        GraphFilter(screenHandle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_LESS, 128, TRUE, GetColor(0, 255, 0), 0);
-    }
-    else if (movieBackColorType == 1)
-    {
-        GraphFilter(screenHandle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_LESS, 128, TRUE, GetColor(0, 0, 0), 0);
-    }
-    else
-    {
-        GraphFilter(screenHandle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_LESS, 128, TRUE, GetColor(0, 255, 0), 0);
-    }
+    //ï¿½Xï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½æ‘œï¿½Æ‚ï¿½ï¿½Ä“ï¿½ï¿½ß‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½`ï¿½ï¿½
+    //ï¿½wï¿½iï¿½ÌFï¿½É‚ï¿½ï¿½ï¿½Ä“ï¿½ï¿½ß‚ï¿½ï¿½ï¿½Fï¿½ï¿½Ï‚ï¿½ï¿½ï¿½
+    if (movieBackColorType == 0)//é»’
+{
+    GraphFilter(screenHandle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_LESS, 10, TRUE, GetColor(0, 255, 0), 0);
+}
+else if (movieBackColorType == 1)//ç·‘
+{
+    GraphFilter(screenHandle, DX_GRAPH_FILTER_REPLACEMENT, 0, 255, 0, 255, 0, 0, 0, 0);
+}
+else//ç™½
+{
+    GraphFilter(screenHandle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_GREATER, 245, TRUE, GetColor(0, 255, 0), 0);
+}
     DrawExtendGraph(position.x, position.y, position.x + movieWidht, position.y + movieHeight, screenHandle, TRUE);
 }
 
 /// <summary>
-/// ‹——£ŒvŽZŠÖ”
+/// ï¿½ï¿½ï¿½ï¿½ï¿½vï¿½Zï¿½Öï¿½
 /// </summary>
-/// <param name="movieHandle">À•W1</param>
-/// <param name="screenHandle">À•W2</param>
+/// <param name="movieHandle">ï¿½ï¿½ï¿½W1</param>
+/// <param name="screenHandle">ï¿½ï¿½ï¿½W2</param>
 template<typename T>
 T CalculateDistance(VECTOR position1, VECTOR position2 = VGet(0.0f, 0.0f, 0.0f))
 {
-    //À•W‚P‚©‚çÀ•W‚Q‚Ü‚Å‚Ì‹——£‚ðŒvŽZ‚µ‚Ä•Ô‚·
+    //ï¿½ï¿½ï¿½Wï¿½Pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½Qï¿½Ü‚Å‚Ì‹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½vï¿½Zï¿½ï¿½ï¿½Ä•Ô‚ï¿½
     VECTOR tempVector   = VGet(position1.x, position1.y, position1.z);
     tempVector          = VSub(tempVector, position2);
     tempVector          = VGet(tempVector.x * tempVector.x, tempVector.y * tempVector.y, tempVector.z * tempVector.z);
@@ -87,24 +87,24 @@ T CalculateDistance(VECTOR position1, VECTOR position2 = VGet(0.0f, 0.0f, 0.0f))
 }
 
 /// <summary>
-/// ‰æ‘œƒAƒjƒ[ƒVƒ‡ƒ“•`‰æ
+/// ï¿½æ‘œï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½ï¿½
 /// </summary>
-/// <param name="position">•`‰æÀ•W</param>
-/// <param name="graphHandle">‰æ‘œƒnƒ“ƒhƒ‹(•ªŠ„“Ç‚Ýž‚Ý‚µ‚½‚à‚Ì)</param>
-/// <param name="graphWidth">‰æ‘œ‚Ì•(1•ªŠ„•ª)</param>
-/// <param name="graphHeight">‰æ‘œ‚Ì‚‚³(1•ªŠ„•ª)</param>
-/// <param name="tilSwitchTime">‰æ‘œ‚ªØ‚è‘Ö‚í‚é‚Ü‚Å‚ÌŽžŠÔ</param>
-/// <param name="finishGraphNumber">ÅŒã‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‰æ‘œ‚ª‰½–‡–Ú‚©‚ð•\‚·”Žš</param>
-/// <param name="startGraphNumber">Å‰‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‰æ‘œ‚ª‰½–‡–Ú‚©‚ð•\‚·”Žš</param>
+/// <param name="position">ï¿½`ï¿½ï¿½ï¿½ï¿½W</param>
+/// <param name="graphHandle">ï¿½æ‘œï¿½nï¿½ï¿½ï¿½hï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½Ç‚Ýï¿½ï¿½Ý‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)</param>
+/// <param name="graphWidth">ï¿½æ‘œï¿½Ì•ï¿½(1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)</param>
+/// <param name="graphHeight">ï¿½æ‘œï¿½Ìï¿½ï¿½ï¿½(1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)</param>
+/// <param name="tilSwitchTime">ï¿½æ‘œï¿½ï¿½ï¿½Ø‚ï¿½Ö‚ï¿½ï¿½Ü‚Å‚ÌŽï¿½ï¿½ï¿½</param>
+/// <param name="finishGraphNumber">ï¿½ÅŒï¿½ÌƒAï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½æ‘œï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú‚ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</param>
+/// <param name="startGraphNumber">ï¿½Åï¿½ï¿½ÌƒAï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½æ‘œï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú‚ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</param>
 void DrawAnimationGraph(VECTOR position, int graphHandle[], int graphWidth, int graphHeight,
     unsigned int tilSwitchTime, unsigned int finishGraphNumber, unsigned int startGraphNumber = 0)
 {
-    //Ø‚è‘Ö‚¦‚Ü‚ÅƒJƒEƒ“ƒg‚ð‘‚â‚µ‚Ä‘Ò‚Â
+    //ï¿½Ø‚ï¿½Ö‚ï¿½ï¿½Ü‚ÅƒJï¿½Eï¿½ï¿½ï¿½gï¿½ð‘‚â‚µï¿½Ä‘Ò‚ï¿½
     static int waitCount;
     static int animationCount = startGraphNumber;
     ++waitCount;
 
-    //•ÊŽí‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ö‚ÌØ‚è‘Ö‚¦‚ðŠ´’m‚µ‚ÄƒJƒEƒ“ƒg‚ð‚O‚É–ß‚·
+    //ï¿½ÊŽï¿½ÌƒAï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ö‚ÌØ‚ï¿½Ö‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mï¿½ï¿½ï¿½ÄƒJï¿½Eï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Oï¿½É–ß‚ï¿½
     static int checkChangeAnim = startGraphNumber;
     if (checkChangeAnim != startGraphNumber)
     {
@@ -115,11 +115,11 @@ void DrawAnimationGraph(VECTOR position, int graphHandle[], int graphWidth, int 
 
     if (waitCount >= tilSwitchTime)
     {
-        //ƒAƒjƒ[ƒVƒ‡ƒ“ƒJƒEƒ“ƒg‚ð‘‚â‚·
+        //ï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½Eï¿½ï¿½ï¿½gï¿½ð‘‚â‚·
         ++animationCount;
         waitCount = 0;
 
-        //ƒAƒjƒ[ƒVƒ‡ƒ“‚ªÅŒã‚Ü‚Å‚¢‚Á‚½‚çÅ‰‚É–ß‚·
+        //ï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÅŒï¿½Ü‚Å‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Åï¿½ï¿½É–ß‚ï¿½
         if (animationCount > finishGraphNumber)
         {
             animationCount = startGraphNumber;
@@ -129,23 +129,23 @@ void DrawAnimationGraph(VECTOR position, int graphHandle[], int graphWidth, int 
 }
 
 /// <summary>
-/// •¶Žš“_–Å•`‰æŠÖ”(ƒtƒHƒ“ƒgŽw’è‰Â”\)
+/// ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½Å•`ï¿½ï¿½Öï¿½(ï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½wï¿½ï¿½Â”\)
 /// </summary>
-/// <param name="position">•`‰æÀ•W</param>
-/// <param name="text">•`‰æ‚µ‚½‚¢ƒeƒLƒXƒg</param>
-/// <param name="color">•¶Žš‚ÌF</param>
-/// <param name="fontHandle">ƒtƒHƒ“ƒgƒnƒ“ƒhƒ‹</param>
-/// <param name="brinkSpeed">“_–ÅƒXƒs[ƒh(ƒfƒtƒHƒ‹ƒg‚Í2A0‚ð“ü‚ê‚é‚Æ“_–Å‚µ‚È‚¢)</param>
+/// <param name="position">ï¿½`ï¿½ï¿½ï¿½ï¿½W</param>
+/// <param name="text">ï¿½`ï¿½æ‚µï¿½ï¿½ï¿½ï¿½ï¿½eï¿½Lï¿½Xï¿½g</param>
+/// <param name="color">ï¿½ï¿½ï¿½ï¿½ï¿½ÌF</param>
+/// <param name="fontHandle">ï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½nï¿½ï¿½ï¿½hï¿½ï¿½</param>
+/// <param name="brinkSpeed">ï¿½_ï¿½ÅƒXï¿½sï¿½[ï¿½h(ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½ï¿½2ï¿½A0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ“_ï¿½Å‚ï¿½ï¿½È‚ï¿½)</param>
 void DrawBrinkStringToHandle(VECTOR position, const char* text, int color, int fontHandle = 0, unsigned short brinkSpeed = 2)
 {
-    //“_–ÅƒXƒs[ƒh‚ª0‚¾‚Á‚½‚ç“_–Å‚µ‚È‚¢
+    //ï¿½_ï¿½ÅƒXï¿½sï¿½[ï¿½hï¿½ï¿½0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½Å‚ï¿½ï¿½È‚ï¿½
     if (brinkSpeed == 0)
     {
         DrawStringToHandle(position.x, position.y, text, color, fontHandle);
     }
     else
     {
-        //“_–ÅƒJƒEƒ“ƒg
+        //ï¿½_ï¿½ÅƒJï¿½Eï¿½ï¿½ï¿½g
         static int brinkCount;
         brinkCount += 1 * brinkSpeed;
         if (brinkCount > 100)
@@ -153,7 +153,7 @@ void DrawBrinkStringToHandle(VECTOR position, const char* text, int color, int f
             brinkCount = 0;
         }
 
-        //“_–ÅƒJƒEƒ“ƒg‚ªˆê’è’lˆÈ‰º‚Ì‚Æ‚«‚¾‚¯•`‰æ‚·‚é
+        //ï¿½_ï¿½ÅƒJï¿½Eï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½lï¿½È‰ï¿½ï¿½Ì‚Æ‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½æ‚·ï¿½ï¿½
         if (brinkCount > 100 / brinkSpeed)
         {
             DrawStringToHandle(position.x, position.y, text, color, fontHandle);
@@ -162,24 +162,24 @@ void DrawBrinkStringToHandle(VECTOR position, const char* text, int color, int f
 }
 
 /// <summary>
-/// ‰æ‘œ“_–Å•`‰æŠÖ”
+/// ï¿½æ‘œï¿½_ï¿½Å•`ï¿½ï¿½Öï¿½
 /// </summary>
-/// <param name="position">•`‰æÀ•W</param>
-/// <param name="widht">‰æ‘œ‚Ì•</param>
-/// <param name="height">‰æ‘œ‚Ì‚‚³</param>
-/// <param name="graphHandle">‰æ‘œƒnƒ“ƒhƒ‹</param>
-/// <param name="brinkSpeed">“_–ÅƒXƒs[ƒh(ƒfƒtƒHƒ‹ƒg‚Í2A0‚ð“ü‚ê‚é‚Æ“_–Å‚µ‚È‚¢)</param>
-/// <param name="isTrans">‰æ‘œ“§‰ß‚ð‹–‚·‚©‚Ç‚¤‚©</param>
+/// <param name="position">ï¿½`ï¿½ï¿½ï¿½ï¿½W</param>
+/// <param name="widht">ï¿½æ‘œï¿½Ì•ï¿½</param>
+/// <param name="height">ï¿½æ‘œï¿½Ìï¿½ï¿½ï¿½</param>
+/// <param name="graphHandle">ï¿½æ‘œï¿½nï¿½ï¿½ï¿½hï¿½ï¿½</param>
+/// <param name="brinkSpeed">ï¿½_ï¿½ÅƒXï¿½sï¿½[ï¿½h(ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½ï¿½2ï¿½A0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ“_ï¿½Å‚ï¿½ï¿½È‚ï¿½)</param>
+/// <param name="isTrans">ï¿½æ‘œï¿½ï¿½ï¿½ß‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½</param>
 void DrawExtendBrinkGraph(VECTOR position, float widht, float height, int graphHandle,  unsigned short brinkSpeed = 2, bool isTrans = true)
 {
-    //“_–ÅƒXƒs[ƒh‚ª0‚¾‚Á‚½‚ç“_–Å‚µ‚È‚¢
+    //ï¿½_ï¿½ÅƒXï¿½sï¿½[ï¿½hï¿½ï¿½0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½Å‚ï¿½ï¿½È‚ï¿½
     if (brinkSpeed == 0)
     {
         DrawExtendGraph(position.x, position.y, position.x + widht, position.y + height, graphHandle, isTrans);
     }
     else
     {
-        //“_–ÅƒJƒEƒ“ƒg
+        //ï¿½_ï¿½ÅƒJï¿½Eï¿½ï¿½ï¿½g
         static int brinkCount;
         brinkCount += 1 * brinkSpeed;
         if (brinkCount > 100)
@@ -187,7 +187,7 @@ void DrawExtendBrinkGraph(VECTOR position, float widht, float height, int graphH
             brinkCount = 0;
         }
 
-        //“_–ÅƒJƒEƒ“ƒg‚ªˆê’è’lˆÈ‰º‚Ì‚Æ‚«‚¾‚¯•`‰æ‚·‚é
+        //ï¿½_ï¿½ÅƒJï¿½Eï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½lï¿½È‰ï¿½ï¿½Ì‚Æ‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½æ‚·ï¿½ï¿½
         if (brinkCount > 100 / brinkSpeed)
         {
             DrawExtendGraph(position.x, position.y, position.x + widht, position.y + height, graphHandle, isTrans);
