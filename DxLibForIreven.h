@@ -3,44 +3,48 @@
 #include<math.h>
 
 /// <summary>
-/// dxlib�ݒ�
+/// dxlib設定
 /// </summary>
-/// <param name="screenWidht">�X�N���[���̕�</param>
-/// <param name="screenHeight">�X�N���[���̍���</param>
+/// <param name="screenWidht">スクリーン幅</param>
+/// <param name="screenHeight">スクリーン高さ</param>
 void DxlibSetting(unsigned int screenWidht = 1920, unsigned int screenHeight = 1080)
 {
-    SetGraphMode(screenWidht, screenHeight, 32);//�E�B���h�E�̃T�C�Y�ƃJ���[���[�h�����߂�
-    ChangeWindowMode(TRUE);						//�E�B���h�E���[�h�ɂ���
-    SetWindowStyleMode(7);						//�ő剻�{�^�������݂���E�C���h�E���[�h�ɕύX
+    SetGraphMode(screenWidht, screenHeight, 32);//ウィンドウのサイズとカラーモードを決める
+    ChangeWindowMode(TRUE);						//ウィンドウモードにする
+    SetWindowStyleMode(7);						//最大化ボタンが存在するウインドウモードに変更
 
+    //dxlib初期化
     if (DxLib_Init() == -1)return;
 
-    // �T�C�Y�ύX���\�ɂ���
+    //サイズ変更を可能にする
     SetWindowSizeChangeEnableFlag(TRUE, FALSE);
 
-    // �E�C���h�E�T�C�Y�̓Q�[����ʂƈ�v������
+    //ウインドウサイズはゲーム画面と一致させる
     SetWindowSize(screenWidht, screenHeight);
 
-    SetMainWindowText("gamename");              //�E�B���h�E�i�����Ƃ���j�ɃQ�[����������
-    SetDrawScreen(DX_SCREEN_BACK);		        //�w�i���Z�b�g����
+    SetMainWindowText("gamename");              //ウィンドウ（白いところ）にゲーム名を書く
+    SetDrawScreen(DX_SCREEN_BACK);		        //背景をセットする
 }
 
 /// <summary>
-/// �w�i���ߓ���Đ��֐�
+/// 背景透過動画再生関数
 /// </summary>
-/// <param name="movieHandle">����n���h��</param>
-/// <param name="screenHandle">�X�N���[���n���h����MakeScreen�֐��Ńn���h��������Ă��̎��ɑ�O������TRUE�ɂ���K�v������</param>
-/// <param name="movieBackColorType">����w�i�F�̃^�C�v(0:��, 1:��, 2:�����w�肷��)</param>
-/// <param name="movieWidht">���敝</param>
-/// <param name="movieHeght">���捂��</param>
-/// <param name="isLoop">��������[�v���邩</param>
-/// <param name="screenType">�ŏI�I�ɕ`�悷��Ƃ��̃X�N���[���n���h��</param>
+/// <param name="movieHandle">動画ハンドル</param>
+/// <param name="screenHandle">スクリーンハンドル※MakeScreen関数でハンドルを作ってその時に第三引数をTRUEにする必要がある</param>
+/// <param name="movieBackColorType">動画背景色のタイプ(0:黒, 1:緑, 2:白を指定する)</param>
+/// <param name="movieWidht">動画幅</param>
+/// <param name="movieHeght">動画高さ</param>
+/// <param name="position">動画座標</param>
+/// <param name="isLoop">動画をループするか</param>
+/// <param name="screenType">最終的に描画するとこのスクリーンハンドル</param>
 void PlayTransparentMovie(int movieHandle, int screenHandle, unsigned short movieBackColorType = 0, int movieWidht = 1920, int movieHeight = 1080,
     VECTOR position = VGet(0.0f, 0.0f, 0.0f), bool isLoop = true, int screenType = DX_SCREEN_BACK)
 {
-    //�X�N���[���n���h���ɓ����`�悷��
+    //スクリーンハンドルに動画を描画する
     SetDrawScreen(screenHandle);
-    if (isLoop)//���[�v�Đ����邩�ǂ���
+
+    //ループ再生するかどうか
+    if (isLoop)
     {
         PlayMovieToGraph(movieHandle, DX_PLAYTYPE_LOOP);
     }
@@ -50,76 +54,78 @@ void PlayTransparentMovie(int movieHandle, int screenHandle, unsigned short movi
     }
     DrawExtendGraph(position.x, position.y, position.x + movieWidht, position.y + movieHeight, movieHandle, TRUE);
 
-    //���̃X�N���[���n���h���ɖ߂�
+    //元のスクリーンハンドルに戻す
     SetDrawScreen(screenType);
 
-    //�X�N���[���n���h�����摜�Ƃ��ē��߂��Ă���`��
-    //�w�i�̐F�ɂ���ē��߂���F��ς���
+    //スクリーンハンドルを画像として透過してから描画
+    //背景の色によって透過する色を変える
     if (movieBackColorType == 0)//黒
-{
-    GraphFilter(screenHandle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_LESS, 10, TRUE, GetColor(0, 255, 0), 0);
-}
-else if (movieBackColorType == 1)//緑
-{
-    GraphFilter(screenHandle, DX_GRAPH_FILTER_REPLACEMENT, 0, 255, 0, 255, 0, 0, 0, 0);
-}
-else//白
-{
-    GraphFilter(screenHandle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_GREATER, 245, TRUE, GetColor(0, 255, 0), 0);
-}
+    {
+        GraphFilter(screenHandle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_LESS, 10, TRUE, GetColor(0, 255, 0), 0);
+    }
+    else if (movieBackColorType == 1)//緑
+    {
+        GraphFilter(screenHandle, DX_GRAPH_FILTER_REPLACEMENT, 0, 255, 0, 255, 0, 0, 0, 0);
+    }
+    else//白
+    {
+        GraphFilter(screenHandle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_GREATER, 245, TRUE, GetColor(0, 255, 0), 0);
+    }
     DrawExtendGraph(position.x, position.y, position.x + movieWidht, position.y + movieHeight, screenHandle, TRUE);
 }
 
 /// <summary>
-/// �����v�Z�֐�
+/// 距離計算関数
 /// </summary>
-/// <param name="movieHandle">���W1</param>
-/// <param name="screenHandle">���W2</param>
+/// <param name="movieHandle">座標1</param>
+/// <param name="screenHandle">座標2</param>
 template<typename T>
 T CalculateDistance(VECTOR position1, VECTOR position2 = VGet(0.0f, 0.0f, 0.0f))
 {
-    //���W�P������W�Q�܂ł̋������v�Z���ĕԂ�
-    VECTOR tempVector   = VGet(position1.x, position1.y, position1.z);
-    tempVector          = VSub(tempVector, position2);
-    tempVector          = VGet(tempVector.x * tempVector.x, tempVector.y * tempVector.y, tempVector.z * tempVector.z);
-    T value             = tempVector.x + tempVector.y + tempVector.z;
+    //2点間の距離を計算する
+    VECTOR tempVector = VGet(position1.x, position1.y, position1.z);
+    tempVector = VSub(tempVector, position2);
+    tempVector = VGet(tempVector.x * tempVector.x, tempVector.y * tempVector.y, tempVector.z * tempVector.z);
+    T value = tempVector.x + tempVector.y + tempVector.z;
     return sqrt(value);
 }
 
 /// <summary>
-/// �摜�A�j���[�V�����`��
+/// 画像アニメーション描画関数
 /// </summary>
-/// <param name="position">�`����W</param>
-/// <param name="graphHandle">�摜�n���h��(�����ǂݍ��݂�������)</param>
-/// <param name="graphWidth">�摜�̕�(1������)</param>
-/// <param name="graphHeight">�摜�̍���(1������)</param>
-/// <param name="tilSwitchTime">�摜���؂�ւ��܂ł̎���</param>
-/// <param name="finishGraphNumber">�Ō�̃A�j���[�V�����摜�������ڂ���\������</param>
-/// <param name="startGraphNumber">�ŏ��̃A�j���[�V�����摜�������ڂ���\������</param>
+/// <param name="position">座標</param>
+/// <param name="graphHandle">画像ハンドル</param>
+/// <param name="graphWidth">画像幅</param>
+/// <param name="graphHeight">画像高さ</param>
+/// <param name="tilSwitchTime">アニメーションが切り替わるまでの時間</param>
+/// <param name="finishGraphNumber">最後の画像がアニメーションの何番目かを表す数値</param>
+/// <param name="startGraphNumber">最初の画像がアニメーションの何番目かを表す数値</param>
 void DrawAnimationGraph(VECTOR position, int graphHandle[], int graphWidth, int graphHeight,
     unsigned int tilSwitchTime, unsigned int finishGraphNumber, unsigned int startGraphNumber = 0)
 {
-    //�؂�ւ��܂ŃJ�E���g�𑝂₵�đ҂�
+    //待ちカウントとアニメーションカウントを定義
     static int waitCount;
     static int animationCount = startGraphNumber;
+
+    //待ちカウントを進める
     ++waitCount;
 
-    //�ʎ�̃A�j���[�V�����ւ̐؂�ւ������m���ăJ�E���g���O�ɖ߂�
+    //アニメーションする画像が切り替わった時にアニメーションを最初からにする
     static int checkChangeAnim = startGraphNumber;
     if (checkChangeAnim != startGraphNumber)
     {
-        waitCount       = 0;
-        animationCount  = startGraphNumber;
+        waitCount = 0;
+        animationCount = startGraphNumber;
         checkChangeAnim = startGraphNumber;
     }
 
     if (waitCount >= tilSwitchTime)
     {
-        //�A�j���[�V�����J�E���g�𑝂₷
+        //アニメーションが切り替わるまでの時間を超えたらアニメーションを進める
         ++animationCount;
         waitCount = 0;
 
-        //�A�j���[�V�������Ō�܂ł�������ŏ��ɖ߂�
+        //アニメーションが最後まで行ったら最初に戻す
         if (animationCount > finishGraphNumber)
         {
             animationCount = startGraphNumber;
@@ -129,23 +135,23 @@ void DrawAnimationGraph(VECTOR position, int graphHandle[], int graphWidth, int 
 }
 
 /// <summary>
-/// �����_�ŕ`��֐�(�t�H���g�w��\)
+/// 文字点滅描画関数(フォント指定可能)
 /// </summary>
-/// <param name="position">�`����W</param>
-/// <param name="text">�`�悵�����e�L�X�g</param>
-/// <param name="color">�����̐F</param>
-/// <param name="fontHandle">�t�H���g�n���h��</param>
-/// <param name="brinkSpeed">�_�ŃX�s�[�h(�f�t�H���g��2�A0������Ɠ_�ł��Ȃ�)</param>
+/// <param name="position">描画座標</param>
+/// <param name="text">描画したいテキスト</param>
+/// <param name="color">文字の色</param>
+/// <param name="fontHandle">フォントハンドル</param>
+/// <param name="brinkSpeed">点滅スピード(デフォルトは2、0を入れると点滅しない)</param>
 void DrawBrinkStringToHandle(VECTOR position, const char* text, int color, int fontHandle = 0, unsigned short brinkSpeed = 2)
 {
-    //�_�ŃX�s�[�h��0��������_�ł��Ȃ�
+    //点滅スピードが0だったら点滅しない
     if (brinkSpeed == 0)
     {
         DrawStringToHandle(position.x, position.y, text, color, fontHandle);
     }
     else
     {
-        //�_�ŃJ�E���g
+        //点滅カウント
         static int brinkCount;
         brinkCount += 1 * brinkSpeed;
         if (brinkCount > 100)
@@ -153,7 +159,7 @@ void DrawBrinkStringToHandle(VECTOR position, const char* text, int color, int f
             brinkCount = 0;
         }
 
-        //�_�ŃJ�E���g�����l�ȉ��̂Ƃ������`�悷��
+        //点滅カウントが一定値以下のときだけ描画する
         if (brinkCount > 100 / brinkSpeed)
         {
             DrawStringToHandle(position.x, position.y, text, color, fontHandle);
@@ -162,24 +168,24 @@ void DrawBrinkStringToHandle(VECTOR position, const char* text, int color, int f
 }
 
 /// <summary>
-/// �摜�_�ŕ`��֐�
+/// 画像点滅描画関数(拡大縮小可能)
 /// </summary>
-/// <param name="position">�`����W</param>
-/// <param name="widht">�摜�̕�</param>
-/// <param name="height">�摜�̍���</param>
-/// <param name="graphHandle">�摜�n���h��</param>
-/// <param name="brinkSpeed">�_�ŃX�s�[�h(�f�t�H���g��2�A0������Ɠ_�ł��Ȃ�)</param>
-/// <param name="isTrans">�摜���߂��������ǂ���</param>
-void DrawExtendBrinkGraph(VECTOR position, float widht, float height, int graphHandle,  unsigned short brinkSpeed = 2, bool isTrans = true)
+/// <param name="position">描画座標</param>
+/// <param name="widht">画像幅</param>
+/// <param name="height">画像高さ</param>
+/// <param name="graphHandle">画像反動</param>
+/// <param name="brinkSpeed">点滅スピード(デフォルトは2、0を入れると点滅しない)</param>
+/// <param name="isTrans">画像の透過処理を許すか</param>
+void DrawExtendBrinkGraph(VECTOR position, float widht, float height, int graphHandle, unsigned short brinkSpeed = 2, bool isTrans = true)
 {
-    //�_�ŃX�s�[�h��0��������_�ł��Ȃ�
+    //点滅スピードが0だったら点滅しない
     if (brinkSpeed == 0)
     {
         DrawExtendGraph(position.x, position.y, position.x + widht, position.y + height, graphHandle, isTrans);
     }
     else
     {
-        //�_�ŃJ�E���g
+        //点滅カウント
         static int brinkCount;
         brinkCount += 1 * brinkSpeed;
         if (brinkCount > 100)
@@ -187,7 +193,7 @@ void DrawExtendBrinkGraph(VECTOR position, float widht, float height, int graphH
             brinkCount = 0;
         }
 
-        //�_�ŃJ�E���g�����l�ȉ��̂Ƃ������`�悷��
+        //点滅カウントが一定値以下のときだけ描画する
         if (brinkCount > 100 / brinkSpeed)
         {
             DrawExtendGraph(position.x, position.y, position.x + widht, position.y + height, graphHandle, isTrans);
