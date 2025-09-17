@@ -31,14 +31,14 @@ void DxlibSetting(unsigned int screenWidht = 1920, unsigned int screenHeight = 1
 /// </summary>
 /// <param name="movieHandle">動画ハンドル</param>
 /// <param name="screenHandle">スクリーンハンドル※MakeScreen関数でハンドルを作ってその時に第三引数をTRUEにする必要がある</param>
-/// <param name="movieBackColorType">動画背景色のタイプ(0:黒, 1:緑, 2:白を指定する)</param>
+/// <param name="movieBackColorType">動画背景色のタイプ(0:黒, 1:白を指定する)</param>
+/// <param name="isLoop">動画をループするか</param>
 /// <param name="movieWidht">動画幅</param>
 /// <param name="movieHeght">動画高さ</param>
-/// <param name="position">動画座標</param>
-/// <param name="isLoop">動画をループするか</param>
-/// <param name="screenType">最終的に描画するとこのスクリーンハンドル</param>
-void PlayTransparentMovie(int movieHandle, int screenHandle, unsigned short movieBackColorType = 0, int movieWidht = 1920, int movieHeight = 1080,
-    VECTOR position = VGet(0.0f, 0.0f, 0.0f), bool isLoop = true, int screenType = DX_SCREEN_BACK)
+/// <param name="moviePosition">動画座標</param>
+/// <param name="originScreenHandle">元々のスクリーンハンドル</param>
+bool PlayTransparentMovie(int movieHandle, int screenHandle, unsigned char movieBackColorType = 0, bool isLoop = true, int movieWidht = 1920, int movieHeight = 1080,
+    VECTOR moviePosition = VGet(0.0f, 0.0f, 0.0f), int originScreenHandle = DX_SCREEN_BACK)
 {
     //スクリーンハンドルに動画を描画する
     SetDrawScreen(screenHandle);
@@ -52,26 +52,32 @@ void PlayTransparentMovie(int movieHandle, int screenHandle, unsigned short movi
     {
         PlayMovieToGraph(movieHandle);
     }
-    DrawExtendGraph(position.x, position.y, position.x + movieWidht, position.y + movieHeight, movieHandle, TRUE);
+    DrawExtendGraph(moviePosition.x, moviePosition.y, moviePosition.x + movieWidht, moviePosition.y + movieHeight, movieHandle, TRUE);
 
     //元のスクリーンハンドルに戻す
-    SetDrawScreen(screenType);
+    SetDrawScreen(originScreenHandle);
 
     //スクリーンハンドルを画像として透過してから描画
     //背景の色によって透過する色を変える
     if (movieBackColorType == 0)//黒
     {
-        GraphFilter(screenHandle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_LESS, 10, TRUE, GetColor(0, 255, 0), 0);
-    }
-    else if (movieBackColorType == 1)//緑
-    {
-        GraphFilter(screenHandle, DX_GRAPH_FILTER_REPLACEMENT, 0, 255, 0, 255, 0, 0, 0, 0);
+        GraphFilter(originScreenHandle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_LESS, 10, TRUE, GetColor(0, 255, 0), 0);
     }
     else//白
     {
-        GraphFilter(screenHandle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_GREATER, 245, TRUE, GetColor(0, 255, 0), 0);
+        GraphFilter(originScreenHandle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_GREATER, 245, TRUE, GetColor(0, 255, 0), 0);
     }
-    DrawExtendGraph(position.x, position.y, position.x + movieWidht, position.y + movieHeight, screenHandle, TRUE);
+    DrawExtendGraph(moviePosition.x, moviePosition.y, moviePosition.x + movieWidht, moviePosition.y + movieHeight, originScreenHandle, TRUE);
+
+    //動画が再生してるかを返す
+    if (GetMovieStateToGraph(movieHandle))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 /// <summary>
