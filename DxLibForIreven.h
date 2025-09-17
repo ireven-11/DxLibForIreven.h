@@ -61,13 +61,13 @@ bool PlayTransparentMovie(int movieHandle, int screenHandle, unsigned char movie
     //背景の色によって透過する色を変える
     if (movieBackColorType == 0)//黒
     {
-        GraphFilter(originScreenHandle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_LESS, 10, TRUE, GetColor(0, 255, 0), 0);
+        GraphFilter(screenHandle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_LESS, 10, TRUE, GetColor(0, 255, 0), 0);
     }
     else//白
     {
-        GraphFilter(originScreenHandle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_GREATER, 245, TRUE, GetColor(0, 255, 0), 0);
+        GraphFilter(screenHandle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_GREATER, 245, TRUE, GetColor(0, 255, 0), 0);
     }
-    DrawExtendGraph(moviePosition.x, moviePosition.y, moviePosition.x + movieWidht, moviePosition.y + movieHeight, originScreenHandle, TRUE);
+    DrawExtendGraph(moviePosition.x, moviePosition.y, moviePosition.x + movieWidht, moviePosition.y + movieHeight, screenHandle, TRUE);
 
     //動画が再生してるかを返す
     if (GetMovieStateToGraph(movieHandle))
