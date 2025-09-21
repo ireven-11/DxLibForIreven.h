@@ -3,18 +3,18 @@
 #include<math.h>
 
 /// <summary>
-/// dxlib設定
+/// dxlib初期化
 /// </summary>
 /// <param name="screenWidht">スクリーン幅</param>
 /// <param name="screenHeight">スクリーン高さ</param>
-void DxlibSetting(unsigned int screenWidht = 1920, unsigned int screenHeight = 1080)
+void InitDxLib(unsigned int screenWidht = 1920, unsigned int screenHeight = 1080)
 {
     SetGraphMode(screenWidht, screenHeight, 32);//ウィンドウのサイズとカラーモードを決める
     ChangeWindowMode(TRUE);						//ウィンドウモードにする
     SetWindowStyleMode(7);						//最大化ボタンが存在するウインドウモードに変更
 
     //dxlib初期化
-    if (DxLib_Init() == -1)return;
+    if (DxLib::DxLib_Init() == -1)return;
 
     //サイズ変更を可能にする
     SetWindowSizeChangeEnableFlag(TRUE, FALSE);
