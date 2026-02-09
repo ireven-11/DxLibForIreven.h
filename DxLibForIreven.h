@@ -2,6 +2,10 @@
 #include"DxLib.h"
 #include<math.h>
 #include<cassert>
+#include <windows.h>
+
+#define winmainSetting	_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int	//winmainの引数
+#define gameRoopSetting ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0	//ゲームループの引数(ゲームループの最初にClearDrawScreen()を最後にScreenFlip()を呼ぶ必要がある)
 
 /// <summary>
 /// dxlib初期化
@@ -10,18 +14,22 @@
 /// <param name="screenHeight">スクリーン高さ</param>
 inline void InitDxLib(unsigned int screenWidht = 1920, unsigned int screenHeight = 1080)
 {
-    SetGraphMode(screenWidht, screenHeight, 32);    //ウィンドウのサイズとカラーモードを決める
-    ChangeWindowMode(false);						//ウィンドウモードにする
-    SetWindowStyleMode(7);						    //最大化ボタンが存在するウインドウモードに変更
+    ChangeWindowMode(FALSE);					//ウィンドウモードにする
+    SetWindowStyleMode(7);						//最大化ボタンが存在するウインドウモードに変更
 
-    //dxlib初期化
-    if (DxLib::DxLib_Init() == -1)return;
+    if (DxLib_Init() == -1)return;
 
-    //サイズ変更を可能にする
+    // サイズ変更を可能にする
     SetWindowSizeChangeEnableFlag(TRUE, FALSE);
 
-    //ウインドウサイズはゲーム画面と一致させる
-    SetWindowSize(screenWidht, screenHeight);
+    //pc自体の画面解像度をdxlibのスクリーンサイズに合うように変更
+    DEVMODE pcScreenInfo;	//DEVMODEはpcのスクリーン情報を格納する構造体（windowsAPI）
+    pcScreenInfo.dmPelsWidth = screenWIDTH;
+    pcScreenInfo.dmPelsHeight = screenHEIGHT;
+    ChangeDisplaySettings(&pcScreenInfo, CDS_FULLSCREEN);	//第二引数を「CDS_FULLSCREEN」にするとアプリ終了時に元の解像度に戻る
+
+    //ウィンドウのサイズとカラーモードを決める
+    SetGraphMode(screenWIDTH, screenHEIGHT, 32);
 
     SetMainWindowText("gamename");              //ウィンドウ（白いところ）にゲーム名を書く
     SetDrawScreen(DX_SCREEN_BACK);		        //背景をセットする
