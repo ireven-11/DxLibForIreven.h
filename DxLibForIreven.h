@@ -3,6 +3,7 @@
 #include<math.h>
 #include<cassert>
 #include <windows.h>
+#include<vector>
 
 #define winmainSetting	_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int	//winmainの引数
 #define gameRoopSetting ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0	//ゲームループの引数(ゲームループの最初にClearDrawScreen()を最後にScreenFlip()を呼ぶ必要がある)
@@ -445,4 +446,28 @@ inline float UpDownPositionY(float positionY, const float amplitude = 1.0f, cons
     //sinfで移動
     positionY += sinf(rad / period) * amplitude;
     return positionY;
+}
+
+/// <summary>
+/// セミオート画像分割読み込み関数
+/// </summary>
+/// <param name="graphHandle">画像ハンドル</param>
+/// <param name="graphPath">画像パス</param>
+/// <param name="divNumberX">横分割数</param>
+/// <param name="divNumberY">縦分割数</param>
+inline void semiAutoLoadDivGraph(std::vector<int> graphHandle, const char* graphPath, int divNumberX, int divNumberY)
+{
+    int divGraphAllNumber = divNumberX * divNumberY;//画像分割総数
+    int xSize, ySize;	//画像サイズ用変数
+
+    //画像のサイズを取得
+    int tempGraph = LoadGraph(graphPath);
+    GetGraphSize(tempGraph, &xSize, &ySize);
+    DeleteGraph(tempGraph);
+
+    //要素数をセット
+    graphHandle.resize(divGraphAllNumber);
+
+    //画像を分割読み込み
+    LoadDivGraph(graphPath, divGraphAllNumber, divNumberX, divNumberY, xSize / divNumberX, ySize / divNumberY, graphHandle.data());
 }
