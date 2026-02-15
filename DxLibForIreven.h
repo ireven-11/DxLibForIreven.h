@@ -451,12 +451,14 @@ inline float UpDownPositionY(float positionY, const float amplitude = 1.0f, cons
 /// <summary>
 /// セミオート画像分割読み込み関数
 /// </summary>
-/// <param name="graphHandle">画像ハンドル</param>
 /// <param name="graphPath">画像パス</param>
 /// <param name="divNumberX">横分割数</param>
 /// <param name="divNumberY">縦分割数</param>
-inline void semiAutoLoadDivGraph(std::vector<int> graphHandle, const char* graphPath, int divNumberX, int divNumberY)
+inline std::vector<int> semiAutoLoadDivGraph(const char* graphPath, int divNumberX, int divNumberY)
 {
+    //画像ハンドル
+    std::vector<int> graphHandle;
+
     int divGraphAllNumber = divNumberX * divNumberY;//画像分割総数
     int xSize, ySize;	//画像サイズ用変数
 
@@ -470,4 +472,6 @@ inline void semiAutoLoadDivGraph(std::vector<int> graphHandle, const char* graph
 
     //画像を分割読み込み
     LoadDivGraph(graphPath, divGraphAllNumber, divNumberX, divNumberY, xSize / divNumberX, ySize / divNumberY, graphHandle.data());
+
+    return graphHandle;
 }
