@@ -142,7 +142,7 @@ inline void DrawAnimationGraph(VECTOR position, int graphHandle[], int graphWidt
         waitCount = 0;
 
         //アニメーションが最後まで行ったら最初に戻す
-        if (animationCount > finishGraphNumber)
+        if (animationCount >= finishGraphNumber)
         {
             animationCount = startGraphNumber;
         }
